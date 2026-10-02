@@ -220,20 +220,18 @@ CALLOUTS = {
 
 def callout(kind, title, text, items=None):
     label, edge, bg = CALLOUTS[kind]
-    rows = [[Paragraph(label, S("cl", fontName="Body-Bold", fontSize=7.6, leading=10, textColor=edge, spaceAfter=0))]]
+    head = [Paragraph(label, S("cl", fontName="Body-Bold", fontSize=7.6, leading=10, textColor=edge, spaceAfter=2))]
     if title:
-        rows.append([P(title, "ctitle")])
+        head.append(P(title, "ctitle"))
     body_style = "note" if kind == "mentor_note" else ("script" if kind == "script" else "cbody")
-    if kind == "script":
-        rows += [[P(chunk, "script")] for chunk in re.split(r"\n\s*\n", str(text or "")) if chunk.strip()]
-    else:
-        rows += [[P(chunk, body_style, serif_italic=(kind == "mentor_note"))]
-                 for chunk in re.split(r"\n\s*\n", str(text or "")) if chunk.strip()]
-    for it in items or []:
-        rows.append([Paragraph(rich(it), ST["bullet"], bulletText="•")])
+    parts = [P(chunk, body_style, serif_italic=(kind == "mentor_note"))
+             for chunk in re.split(r"\n\s*\n", str(text or "")) if chunk.strip()]
+    parts += [Paragraph(rich(it), ST["bullet"], bulletText="•") for it in items or []]
     if kind == "mentor_note":
-        rows.append([Paragraph("— your mentor", S("sig", fontName="Serif-Semi", fontSize=9.6, textColor=MUTED,
-                                                    spaceAfter=0))])
+        parts.append(Paragraph("— your mentor", S("sig", fontName="Serif-Semi", fontSize=9.6, textColor=MUTED,
+                                                    spaceAfter=0)))
+    # The label, title and first paragraph share one row so a page break can never strand the label.
+    rows = [[head + parts[:1]]] + [[f] for f in parts[1:]]
     t = Table(rows, colWidths=[CW])
     t.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), bg),

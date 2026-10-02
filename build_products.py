@@ -42,10 +42,11 @@ def chunks(text, limit=1800):
 
 
 def textbox(label, text, edge=GREEN, bg=SOFT_GREEN, title=None, style="script"):
-    rows = [[Paragraph(label, S("tbl", fontName="Body-Bold", fontSize=7.6, leading=10, textColor=edge, spaceAfter=0))]]
+    head = [Paragraph(label, S("tbl", fontName="Body-Bold", fontSize=7.6, leading=10, textColor=edge, spaceAfter=2))]
     if title:
-        rows.append([P(title, "ctitle")])
-    rows += [[P(c, style)] for c in chunks(text)]
+        head.append(P(title, "ctitle"))
+    parts = [P(c, style) for c in chunks(text)]
+    rows = [[head + parts[:1]]] + [[f] for f in parts[1:]]
     t = Table(rows, colWidths=[CW])
     t.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), bg), ("LINEBEFORE", (0, 0), (0, -1), 3, edge),
