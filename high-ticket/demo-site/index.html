@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exemplo Engenharia &amp; Serviços · Demo website</title>
+<meta name="description" content="Demo website for a fictional Mozambican engineering and site-services company.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B2A3C; --navy-2: #133A52; --amber: #F2A541; --amber-dk: #D98A1F;
+    --ink: #14212B; --muted: #5B6B77; --bg: #F6F4EF; --card: #FFFFFF; --line: #E3DED3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+         color: var(--ink); background: var(--bg); line-height: 1.6; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  .demo { background: var(--amber); color: var(--navy); font-size: 13px; font-weight: 600;
+          text-align: center; padding: 7px 16px; }
+
+  header { position: sticky; top: 0; z-index: 10; background: rgba(11, 42, 60, .97); color: #fff; }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.01em;
+           text-decoration: none; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 8px; background: var(--amber); color: var(--navy);
+                display: grid; place-items: center; font-weight: 800; }
+  .brand small { display: block; font-weight: 500; font-size: 11px; opacity: .7; letter-spacing: .04em; }
+  .links { display: flex; gap: 22px; font-size: 14px; }
+  .links a { text-decoration: none; opacity: .85; }
+  .links a:hover { opacity: 1; color: var(--amber); }
+  .lang { display: flex; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; overflow: hidden; }
+  .lang button { background: none; border: 0; color: #fff; font: 600 12px Inter, sans-serif;
+                 padding: 6px 12px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--amber); color: var(--navy); }
+
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, #1E5671 100%);
+          color: #fff; padding: 88px 0 96px; position: relative; overflow: hidden; }
+  .hero::after { content: ""; position: absolute; right: -120px; top: -80px; width: 520px; height: 520px;
+                 border-radius: 50%; border: 70px solid rgba(242, 165, 65, .12); }
+  .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em;
+             text-transform: uppercase; color: var(--amber); margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.1; letter-spacing: -.02em; max-width: 780px; }
+  .hero p { font-size: 18px; opacity: .85; max-width: 640px; margin: 20px 0 32px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; position: relative; z-index: 1; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 10px;
+         font-weight: 700; font-size: 15px; text-decoration: none; border: 0; cursor: pointer; }
+  .btn-primary { background: var(--amber); color: var(--navy); }
+  .btn-primary:hover { background: var(--amber-dk); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.4); color: #fff; }
+  .btn-ghost:hover { background: rgba(255,255,255,.08); }
+
+  .facts { background: var(--card); border-bottom: 1px solid var(--line); }
+  .facts .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .fact { padding: 26px 18px; border-right: 1px solid var(--line); }
+  .fact:last-child { border-right: 0; }
+  .fact b { display: block; font-size: 28px; color: var(--navy); letter-spacing: -.02em; }
+  .fact span { font-size: 13px; color: var(--muted); }
+
+  section { padding: 84px 0; }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+           color: var(--amber-dk); }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; letter-spacing: -.02em; margin: 8px 0 14px; }
+  .lead { color: var(--muted); max-width: 680px; font-size: 17px; }
+
+  .about { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .about-card { background: var(--navy); color: #fff; border-radius: 16px; padding: 32px; }
+  .about-card li { list-style: none; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.12);
+                   display: flex; gap: 12px; }
+  .about-card li:last-child { border-bottom: 0; }
+  .tick { color: var(--amber); font-weight: 800; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+  .card h3 { font-size: 18px; margin: 14px 0 8px; }
+  .card p { color: var(--muted); font-size: 15px; }
+  .icon { width: 44px; height: 44px; border-radius: 10px; background: #FBEBD3; display: grid; place-items: center; }
+  .icon svg { width: 22px; height: 22px; stroke: var(--amber-dk); fill: none; stroke-width: 2;
+              stroke-linecap: round; stroke-linejoin: round; }
+
+  .dark { background: var(--navy); color: #fff; }
+  .dark .lead { color: rgba(255,255,255,.75); }
+  .dark .card { background: var(--navy-2); border-color: rgba(255,255,255,.1); }
+  .dark .card p { color: rgba(255,255,255,.75); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--amber);
+         border: 1px solid rgba(242,165,65,.4); border-radius: 999px; padding: 2px 10px; }
+  .meta { font-size: 13px; opacity: .7; margin-top: 10px; }
+
+  .hse { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+  .stat b { font-size: 34px; color: var(--navy); letter-spacing: -.02em; display: block; }
+  .stat span { color: var(--muted); font-size: 14px; }
+
+  .contact { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; }
+  .contact-info p { margin: 10px 0; color: var(--muted); }
+  .contact-info strong { color: var(--ink); }
+  form { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+         display: grid; gap: 14px; }
+  label { font-size: 13px; font-weight: 600; display: grid; gap: 6px; }
+  input, select, textarea { font: 15px Inter, sans-serif; padding: 11px 12px; border: 1px solid var(--line);
+                            border-radius: 9px; background: #FCFBF8; color: var(--ink); width: 100%; }
+  textarea { min-height: 96px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--amber); border-color: transparent; }
+  .note { display: none; background: #FBEBD3; border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .note pre { white-space: pre-wrap; font: 13px/1.5 Inter, sans-serif; margin-top: 8px; color: var(--muted); }
+
+  footer { background: #071D2A; color: rgba(255,255,255,.7); font-size: 13px; padding: 28px 0; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+  .wa-float { position: fixed; right: 18px; bottom: 18px; width: 56px; height: 56px; border-radius: 50%;
+              background: #25D366; display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.2);
+              z-index: 20; }
+  .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+  @media (max-width: 900px) {
+    .links { display: none; }
+    .facts .wrap { grid-template-columns: repeat(2, 1fr); }
+    .fact:nth-child(2) { border-right: 0; }
+    .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .about, .contact { grid-template-columns: 1fr; }
+    .grid, .hse { grid-template-columns: 1fr; }
+    section { padding: 60px 0; }
+    .hero { padding: 64px 0 72px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo" data-i18n="demo">DEMO WEBSITE · fictional company, created to show what your company's website could look like.</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="brand-mark">E</span>
+      <span>Exemplo Engenharia<small data-i18n="brandsub">ENGINEERING &amp; SITE SERVICES</small></span>
+    </a>
+    <nav class="links">
+      <a href="#about" data-i18n="nav1">About</a>
+      <a href="#services" data-i18n="nav2">Services</a>
+      <a href="#projects" data-i18n="nav3">Projects</a>
+      <a href="#hse" data-i18n="nav4">HSE</a>
+      <a href="#contact" data-i18n="nav5">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n="eyebrow">Mozambican-owned · Maputo · Pemba · Tete</span>
+      <h1 data-i18n="h1">Engineering and site services for energy, mining and infrastructure projects.</h1>
+      <p data-i18n="sub">Civil works, equipment rental, logistics and camp services, delivered by a Mozambican workforce to international safety and quality standards.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#contact" data-i18n="cta1">Request a quote</a>
+        <a class="btn btn-ghost" href="company-profile.pdf" target="_blank" rel="noopener" data-i18n="cta2">Download company profile (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div class="wrap">
+      <div class="fact"><b>2015</b><span data-i18n="f1">Founded</span></div>
+      <div class="fact"><b>120+</b><span data-i18n="f2">Employees, 90% Mozambican</span></div>
+      <div class="fact"><b>3</b><span data-i18n="f3">Regional bases</span></div>
+      <div class="fact"><b>PT · EN</b><span data-i18n="f4">Bilingual reporting</span></div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <span class="label" data-i18n="aboutlabel">About us</span>
+        <h2 data-i18n="abouth">A local partner that works to international standards.</h2>
+        <p class="lead" data-i18n="aboutp">Exemplo Engenharia &amp; Serviços supports international contractors and Mozambican companies with dependable site services. We hire and train locally, report in Portuguese and English, and plan every job around safety, schedule and cost.</p>
+      </div>
+      <ul class="about-card">
+        <li><span class="tick">✓</span><span data-i18n="a1">100% Mozambican-owned and registered company</span></li>
+        <li><span class="tick">✓</span><span data-i18n="a2">Compliance documents ready for supplier registration</span></li>
+        <li><span class="tick">✓</span><span data-i18n="a3">HSE procedures aligned with ISO 45001</span></li>
+        <li><span class="tick">✓</span><span data-i18n="a4">Own equipment fleet and maintenance workshop</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="services" style="padding-top:0">
+    <div class="wrap">
+      <span class="label" data-i18n="slabel">Services</span>
+      <h2 data-i18n="sh">What we deliver</h2>
+      <p class="lead" data-i18n="sp">One local partner for the work that keeps large projects moving.</p>
+      <div class="grid">
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div>
+          <h3 data-i18n="s1h">Civil works</h3><p data-i18n="s1p">Access roads, platforms, drainage, foundations and light structures.</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 17h13l3-5h2v5h-2M3 17V9h9v8M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></div>
+          <h3 data-i18n="s2h">Equipment rental</h3><p data-i18n="s2p">Excavators, loaders, tippers, cranes and generators, with or without operators.</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></div>
+          <h3 data-i18n="s3h">Logistics &amp; transport</h3><p data-i18n="s3p">Cargo transport, site deliveries and warehousing between ports and project sites.</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 11h16M6 11V7a6 6 0 0 1 12 0v4M5 11l1 9h12l1-9"/></svg></div>
+          <h3 data-i18n="s4h">Camp services</h3><p data-i18n="s4p">Catering, cleaning, laundry and maintenance for project camps.</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3 data-i18n="s5h">HSE &amp; training</h3><p data-i18n="s5p">Induction, first aid, working at height and defensive-driving training for local teams.</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4 2.5-2.5z"/></svg></div>
+          <h3 data-i18n="s6h">Facilities maintenance</h3><p data-i18n="s6p">Electrical, plumbing and preventive maintenance for offices, camps and yards.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="dark">
+    <div class="wrap">
+      <span class="label" data-i18n="plabel">Project experience</span>
+      <h2 data-i18n="ph">Recent work (example projects)</h2>
+      <p class="lead" data-i18n="pp">On a real client's website, this section shows only projects the client has done and agreed to publish.</p>
+      <div class="grid">
+        <div class="card"><span class="tag" data-i18n="p1t">Civil works</span>
+          <h3 data-i18n="p1h">14 km access road rehabilitation</h3>
+          <p data-i18n="p1p">Grading, drainage and gravel surfacing for an international contractor.</p>
+          <div class="meta">Cabo Delgado · 2024</div></div>
+        <div class="card"><span class="tag" data-i18n="p2t">Equipment rental</span>
+          <h3 data-i18n="p2h">Fleet support for port works</h3>
+          <p data-i18n="p2p">Excavators, tippers and operators for a 9-month expansion programme.</p>
+          <div class="meta">Nacala · 2025</div></div>
+        <div class="card"><span class="tag" data-i18n="p3t">Camp services</span>
+          <h3 data-i18n="p3h">300-person camp support</h3>
+          <p data-i18n="p3p">Catering, cleaning and maintenance for a mining services company.</p>
+          <div class="meta">Tete · 2023–2025</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hse">
+    <div class="wrap">
+      <span class="label" data-i18n="hlabel">Health, safety &amp; environment</span>
+      <h2 data-i18n="hh">Safety is how we work, every day.</h2>
+      <p class="lead" data-i18n="hp">Daily toolbox talks, a stop-work policy for everyone on site, and monthly HSE reports for every client.</p>
+      <div class="hse">
+        <div class="stat"><b>1.2M</b><span data-i18n="h1s">work hours without a lost-time incident (example)</span></div>
+        <div class="stat"><b>100%</b><span data-i18n="h2s">of field staff trained in first aid and site induction</span></div>
+        <div class="stat"><b>24 h</b><span data-i18n="h3s">maximum response time for client requests</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-top:0">
+    <div class="wrap contact">
+      <div class="contact-info">
+        <span class="label" data-i18n="clabel">Contact</span>
+        <h2 data-i18n="ch">Tell us about your project.</h2>
+        <p data-i18n="cp">Send the form and your request opens in WhatsApp, already written. We reply within 24 hours.</p>
+        <p><strong data-i18n="addr">Head office:</strong> Av. Exemplo 123, Maputo</p>
+        <p><strong>Email:</strong> <a href="mailto:info@example.com">info@example.com</a></p>
+        <p><strong data-i18n="hours">Hours:</strong> <span data-i18n="hoursv">Mon–Fri 07:30–17:00 · Sat 08:00–12:00</span></p>
+      </div>
+      <form id="quote" novalidate>
+        <label><span data-i18n="fn">Your name</span><input name="name" required autocomplete="name"></label>
+        <label><span data-i18n="fc">Company</span><input name="company" autocomplete="organization"></label>
+        <label><span data-i18n="fs">Service needed</span>
+          <select name="service">
+            <option data-i18n="s1h">Civil works</option>
+            <option data-i18n="s2h">Equipment rental</option>
+            <option data-i18n="s3h">Logistics &amp; transport</option>
+            <option data-i18n="s4h">Camp services</option>
+            <option data-i18n="s5h">HSE &amp; training</option>
+            <option data-i18n="s6h">Facilities maintenance</option>
+          </select></label>
+        <label><span data-i18n="fm">Project details</span><textarea name="message"></textarea></label>
+        <button class="btn btn-primary" type="submit" data-i18n="fsend">Send request via WhatsApp</button>
+        <div class="note" id="note" role="status"><span data-i18n="demonote">Demo mode: on a client's website, this opens WhatsApp with the message below already written to the company's number.</span><pre id="preview"></pre></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot">© 2026 Exemplo Engenharia &amp; Serviços, Lda: fictional company, demo website.</span>
+    <span data-i18n="foot2">Bilingual website · Portuguese / English</span>
+  </div>
+</footer>
+
+<a class="wa-float" href="#contact" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg></a>
+
+<script>
+  // On a client's site: put the company's WhatsApp number here (258 + 9 digits, no + or spaces).
+  const WHATSAPP_NUMBER = "";
+
+  const PT = {
+    demo: "WEBSITE DE DEMONSTRAÇÃO · empresa fictícia, criada para mostrar como pode ficar o website da sua empresa.",
+    brandsub: "ENGENHARIA E SERVIÇOS DE APOIO A OBRAS",
+    nav1: "Sobre nós", nav2: "Serviços", nav3: "Projectos", nav4: "HSE", nav5: "Contacto",
+    eyebrow: "Empresa moçambicana · Maputo · Pemba · Tete",
+    h1: "Engenharia e serviços de apoio para projectos de energia, mineração e infra-estruturas.",
+    sub: "Obras civis, aluguer de equipamentos, logística e serviços de acampamento, executados por uma equipa moçambicana segundo padrões internacionais de segurança e qualidade.",
+    cta1: "Pedir orçamento", cta2: "Descarregar perfil da empresa (PDF)",
+    f1: "Fundação", f2: "Colaboradores, 90% moçambicanos", f3: "Bases regionais", f4: "Relatórios bilingues",
+    aboutlabel: "Sobre nós", abouth: "Um parceiro local que trabalha com padrões internacionais.",
+    aboutp: "A Exemplo Engenharia & Serviços apoia empreiteiros internacionais e empresas moçambicanas com serviços de obra fiáveis. Contratamos e formamos localmente, reportamos em português e inglês e planeamos cada trabalho com foco em segurança, prazo e custo.",
+    a1: "Empresa 100% moçambicana e registada", a2: "Documentação pronta para registo como fornecedor",
+    a3: "Procedimentos de HSE alinhados com a ISO 45001", a4: "Frota própria e oficina de manutenção",
+    slabel: "Serviços", sh: "O que fazemos", sp: "Um único parceiro local para o trabalho que mantém os grandes projectos a andar.",
+    s1h: "Obras civis", s1p: "Estradas de acesso, plataformas, drenagem, fundações e estruturas ligeiras.",
+    s2h: "Aluguer de equipamentos", s2p: "Escavadoras, pás carregadoras, basculantes, gruas e geradores, com ou sem operador.",
+    s3h: "Logística e transporte", s3p: "Transporte de carga, entregas em obra e armazenagem entre portos e projectos.",
+    s4h: "Serviços de acampamento", s4p: "Catering, limpeza, lavandaria e manutenção para acampamentos de projecto.",
+    s5h: "HSE e formação", s5p: "Indução, primeiros socorros, trabalho em altura e condução defensiva para equipas locais.",
+    s6h: "Manutenção de instalações", s6p: "Electricidade, canalização e manutenção preventiva de escritórios, acampamentos e estaleiros.",
+    plabel: "Experiência", ph: "Trabalhos recentes (projectos de exemplo)",
+    pp: "No website de um cliente real, esta secção mostra apenas projectos que o cliente fez e autorizou publicar.",
+    p1t: "Obras civis", p1h: "Reabilitação de 14 km de estrada de acesso", p1p: "Terraplenagem, drenagem e revestimento para um empreiteiro internacional.",
+    p2t: "Aluguer de equipamentos", p2h: "Frota de apoio a obras portuárias", p2p: "Escavadoras, basculantes e operadores para um programa de expansão de 9 meses.",
+    p3t: "Serviços de acampamento", p3h: "Apoio a acampamento de 300 pessoas", p3p: "Catering, limpeza e manutenção para uma empresa de serviços mineiros.",
+    hlabel: "Saúde, segurança e ambiente", hh: "Segurança é a forma como trabalhamos, todos os dias.",
+    hp: "Palestras diárias de segurança, direito de parar o trabalho para todos em obra e relatórios mensais de HSE para cada cliente.",
+    h1s: "horas de trabalho sem acidentes com baixa (exemplo)", h2s: "dos trabalhadores de campo com formação em primeiros socorros e indução",
+    h3s: "tempo máximo de resposta aos pedidos dos clientes",
+    clabel: "Contacto", ch: "Fale-nos do seu projecto.",
+    cp: "Envie o formulário e o seu pedido abre no WhatsApp, já escrito. Respondemos em 24 horas.",
+    addr: "Sede:", hours: "Horário:", hoursv: "Seg–Sex 07:30–17:00 · Sáb 08:00–12:00",
+    fn: "O seu nome", fc: "Empresa", fs: "Serviço pretendido", fm: "Detalhes do projecto",
+    fsend: "Enviar pedido por WhatsApp",
+    demonote: "Modo de demonstração: no website de um cliente, isto abre o WhatsApp com a mensagem abaixo já escrita para o número da empresa.",
+    foot: "© 2026 Exemplo Engenharia & Serviços, Lda: empresa fictícia, website de demonstração.",
+    foot2: "Website bilingue · Português / Inglês"
+  };
+
+  const nodes = document.querySelectorAll("[data-i18n]");
+  const EN = {};
+  nodes.forEach(n => { EN[n.dataset.i18n] = n.textContent; });
+  let lang = "en";
+
+  function setLang(next) {
+    lang = next;
+    const dict = next === "pt" ? PT : EN;
+    nodes.forEach(n => { const v = dict[n.dataset.i18n]; if (v) n.textContent = v; });
+    document.documentElement.lang = next;
+    document.querySelectorAll(".lang button").forEach(b =>
+      b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
+    try { localStorage.setItem("lang", next); } catch (e) { /* storage unavailable */ }
+  }
+
+  document.querySelectorAll(".lang button").forEach(b =>
+    b.addEventListener("click", () => setLang(b.dataset.lang)));
+  try { if (localStorage.getItem("lang") === "pt") setLang("pt"); } catch (e) { /* ignore */ }
+
+  document.getElementById("quote").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const name = (f.get("name") || "").trim();
+    if (!name) { e.target.elements.name.focus(); return; }
+    const company = (f.get("company") || "").trim();
+    const service = f.get("service");
+    const details = (f.get("message") || "").trim();
+    const text = lang === "pt"
+      ? `Olá! Sou ${name}${company ? " da " + company : ""}. Gostaria de um orçamento para: ${service}.${details ? "\n" + details : ""}`
+      : `Hello! I'm ${name}${company ? " from " + company : ""}. I'd like a quote for: ${service}.${details ? "\n" + details : ""}`;
+    if (WHATSAPP_NUMBER) {
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    } else {
+      document.getElementById("preview").textContent = text;
+      document.getElementById("note").style.display = "block";
+    }
+  });
+</script>
+</body>
+</html>
