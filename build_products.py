@@ -131,7 +131,7 @@ def sales_section(i, sec, accent):
         ("TOPPADDING", (0, 0), (-1, 0), 0), ("BOTTOMPADDING", (0, 0), (-1, 0), 0),
         ("TOPPADDING", (0, 1), (-1, 1), 8), ("BOTTOMPADDING", (0, -1), (-1, -1), 10),
     ]))
-    return [t, Spacer(1, 10)]
+    return [CondPageBreak(48 * mm), t, Spacer(1, 10)]
 
 
 def build(prod):
@@ -228,7 +228,9 @@ def build(prod):
     # 3. Product
     story += section_title(3, "The product", "s3")
     for i, m in enumerate(bp.get("modules", []), 1):
-        rows = [[P(f"**Módulo {i} · {m.get('title', '')}**", S("mh", fontName="Serif-Bold", fontSize=12.5, leading=16,
+        mtitle = m.get("title", "")
+        mtitle = mtitle if mtitle.lower().startswith("módulo") else f"Módulo {i} · {mtitle}"
+        rows = [[P(f"**{mtitle}**", S("mh", fontName="Serif-Bold", fontSize=12.5, leading=16,
                                                                 textColor=DEEP, spaceAfter=0))],
                 [P(f"**Goal:** {m.get('goal', '')}", "cbody")]]
         rows += [[Paragraph(rich(x), ST["bullet"], bulletText="•")] for x in m.get("lessons", [])]
@@ -302,6 +304,12 @@ def build(prod):
     # 7. Lovable
     story += section_title(7, "Build the pages in Lovable", "s7")
     story += [P(lv.get("overview", ""))]
+    story += callout("tip", "Long prompts",
+                     "The sales-page prompt (step 2) is long because it carries every word of your page. If Lovable says "
+                     "the message is too long, send it in two parts. In the first message write 'Part 1 of 2: build these "
+                     "sections and wait for part 2', then paste the first half. In the second message write 'Part 2 of 2: "
+                     "add these sections below the previous ones, keep the exact text', then paste the rest. Copy prompts "
+                     "from lovable-prompts.md, not from this PDF, so the line breaks stay clean.")
     story += [P("Before you start", "ctitle")] + checks(lv.get("before_you_start"))
     ds = lv.get("design_system", {})
     swatches = [["", "Colour", "Hex", "Use"]]
